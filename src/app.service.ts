@@ -8,7 +8,15 @@ type postSignupReqType = {
 
 @Injectable()
 export class AppService {
+  getStory(req: Request, res: Response): void {
+    res.json({id:"id"});
+  };
+
   postSignup(req: Request, res: Response): void {
-    const { id, password } = req.body;
+    const { id, password, nickname } = req.body;
+  };
+
+  postNicknameCheck(req: Request, res: Response): void {
+
   };
 };
