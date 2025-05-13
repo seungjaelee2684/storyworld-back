@@ -24,9 +24,9 @@ export class UserService {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) throw new UnauthorizedException("비밀번호가 다릅니다.");
 
-    const payload = { loginId: user.id, id: user.userId };
+    const payload = { loginId: user.id, user_id: user.user_id };
     const accessToken = this.jwtService.sign(payload);
-
+    
     res.send({ message: '로그인에 성공하였습니다.', status: 201, token: accessToken });
   };
 

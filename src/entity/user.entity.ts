@@ -7,7 +7,7 @@ import { Character } from './character.entity';
 @Unique(['id', 'nickname'])
 export class User {
   @PrimaryGeneratedColumn({ name: 'user_id' })
-  userId: number;
+  user_id: number;
 
   @Column()
   id: string;

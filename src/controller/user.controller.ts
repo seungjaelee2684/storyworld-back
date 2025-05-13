@@ -6,16 +6,16 @@ import { User } from 'src/entity/user.entity';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags()
-@Controller()
+@Controller('user')
 export class UserController {
   constructor(private readonly appService: UserService) {};
 
-  @Post('/user/login')
+  @Post('/login')
   postLogin(@Req() req: Request, @Res() res: Response): Promise<void> {
     return this.appService.postLogin(req, res);
   };
 
-  @Post('/user/signup')
+  @Post('/signup')
   postSignup(@Req() req: Request, @Res() res: Response): Promise<void> {
     return this.appService.postSignup(req, res);
   };
