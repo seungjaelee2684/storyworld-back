@@ -5,13 +5,13 @@ import { Story } from './story.entity';
 @Entity('characters')
 export class Character {
   @PrimaryGeneratedColumn({ name: 'character_id' })
-  characterId: number;
+  character_id: number;
 
   @Column({ name: 'user_id' })
-  userId: number;
+  user_id: number;
 
   @Column({ name: 'story_id' })
-  storyId: number;
+  story_id: number;
 
   @Column()
   name: string;

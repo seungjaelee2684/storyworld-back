@@ -7,18 +7,18 @@ import { Character } from './character.entity';
 @Unique(['title'])
 export class Story {
   @PrimaryGeneratedColumn({ name: 'story_id' })
-  storyId: number;
+  story_id: number;
 
   @Column({ name: 'user_id' })
-  userId: number;
+  user_id: number;
 
   @Column()
   title: string;
 
   @Column({ name: 'sub_title', nullable: true })
-  subTitle?: string;
+  sub_title?: string;
 
-  @Column({ default: '기타' })
+  @Column({ default: '기타', nullable: true })
   genre: string;
 
   @Column({ length: 1000, nullable: true })
