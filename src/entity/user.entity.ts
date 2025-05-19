@@ -18,6 +18,9 @@ export class User {
   @Column()
   nickname: string;
 
+  @Column()
+  bookmarks: string[];
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 

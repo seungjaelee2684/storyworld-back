@@ -13,6 +13,9 @@ export class Story {
   user_id: number;
 
   @Column()
+  star: number;
+
+  @Column()
   title: string;
 
   @Column({ name: 'sub_title', nullable: true })
