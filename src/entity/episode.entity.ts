@@ -17,10 +17,10 @@ export class Episode {
   title: string;
 
   @Column({ name: 'main_text', type: 'text' })
-  mainText: string;
+  main_text: string;
 
   @Column({ name: 'character_list', type: 'json', nullable: true })
-  characterList?: any;
+  character_list?: any;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
