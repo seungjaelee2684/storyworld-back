@@ -18,8 +18,8 @@ export class User {
   @Column()
   nickname: string;
 
-  @Column()
-  bookmarks: string[];
+  @Column({ type: 'json', nullable: true })
+  bookmarks: any;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
