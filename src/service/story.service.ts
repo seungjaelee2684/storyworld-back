@@ -36,7 +36,7 @@ export class StoryService {
     };
   };
 
-  async postStoryUpdate(story_id: number, req: Request, res: Response): Promise<void> {
+  async patchStoryUpdate(story_id: number, req: Request, res: Response): Promise<void> {
     const authHeader = req.headers['authorization'];
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       res.status(401).send({ message: 'Not Authorization' });
@@ -49,14 +49,28 @@ export class StoryService {
     try {
       const decoded = this.jwtService.verify(token);
       const user_id = decoded.user_id;
-
-      const newStory = this.storyRepository.create({ user_id, title, sub_title, genre: genre ? genre : '기타', description });
-      await this.storyRepository.save(newStory);
-
-      res.status(200).send({ message: '성공적으로 추가되었습니다.' });
+  
+      const story = await this.storyRepository.findOne({
+        where: { story_id, user_id },
+      });
+  
+      if (!story) {
+        res.status(404).send({ message: '해당 스토리를 찾을 수 없습니다.' });
+        return;
+      }
+  
+      // 필요한 필드만 업데이트
+      story.title = title ?? story.title;
+      story.sub_title = sub_title ?? story.sub_title;
+      story.genre = genre ?? story.genre;
+      story.description = description ?? story.description;
+  
+      await this.storyRepository.save(story);
+  
+      res.status(200).send({ message: '성공적으로 수정되었습니다.' });
     } catch (error) {
       res.status(401).send({ message: 'Authorization Error' });
-    };
+    }
   };
 
   async getStory(req: Request, res: Response): Promise<void> {
@@ -106,4 +120,34 @@ export class StoryService {
       res.status(401).send({ message: 'Authorization Error' });
     };
   };
+
+  async deleteStory(story_id: number, req: Request, res: Response): Promise<void> {
+    const authHeader = req.headers['authorization'];
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      res.status(401).send({ message: 'Not Authorization' });
+      return;
+    };
+
+    const token = authHeader.replace('Bearer ', '').trim();
+
+    try {
+      const decoded = this.jwtService.verify(token);
+      const user_id = decoded.user_id;
+
+      const story = await this.storyRepository.findOne({
+        where: { story_id, user_id },
+      });
+  
+      if (!story) {
+        res.status(404).send({ message: '해당 스토리를 찾을 수 없습니다.' });
+        return;
+      }
+  
+      await this.storyRepository.remove(story);
+
+      res.status(200).send({ message: '성공적으로 삭제되었습니다.' });
+    } catch (error) {
+      res.status(401).send({ message: 'Authorization Error' });
+    }
+  }
 };
